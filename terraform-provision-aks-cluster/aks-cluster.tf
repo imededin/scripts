@@ -5,6 +5,14 @@ resource "random_pet" "prefix" {}
 
 provider "azurerm" {
   features {}
+  subscription_id = var.subscription_id
+  client_id       = var.client_id
+  client_secret   = var.client_secret
+  tenant_id       = var.tenant_id
+  #  subscription_id   = "946717e6-ab3b-4301-807f-d2bc32ebd446"
+  # tenant_id         = "81d3034d-5982-40fb-8c38-368f5a2f76ef"
+  # client_id         = "0f4f88a7-d444-4ae0-b86b-53ff6a3677ef"
+  # client_secret     = "AJH8Q~W~6LWPK.SOYDJyZNt4izHghIFjAaHfab.."
 }
 
 resource "azurerm_resource_group" "default" {

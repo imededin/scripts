@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: back-end
+  labels:
+    app: backend-app
+    namespace: {{ .Values.ns_name}}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app: backend-app
+      
+  template:
+    metadata:
+      labels:
+        app: backend-app
+    spec:
+      serviceAccountName: {{ include "mern-stack.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: backend
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository.backend }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.container.backend_port }}
+              protocol: TCP
+          env:
+            - name: PORT
+              value: "5000"
+            - name: MONGO_DB_URL
+              value: "mongodb://root:{{ .Values.db.password}}@{{ .Values.db.name}}.{{ .Values.ns_name}}.svc.cluster.local"
+          # livenessProbe:
+          #   httpGet:
+          #     path: frontend-svc
+          #     port: 3000
+          # readinessProbe:
+          #   httpGet:
+          #     path: frontend-svc
+          #     port: 3000
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-svc
+  labels:
+    app: backend-app
+    namespace: {{ .Values.ns_name}}
+    
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - name: tcp
+      protocol: TCP
+      port: 3302
+      targetPort: {{ .Values.container.backend_port }}
+  selector:
+    app: backend-app
+    

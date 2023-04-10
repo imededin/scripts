@@ -3,6 +3,7 @@ ARG FOLDER=./front-end
 # Set working directory
 RUN mkdir app
 WORKDIR /app
+RUN echo $FOLDER
 
 # Copy package.json and package-lock.json (if applicable)
 COPY $FOLDER/package*.json ./
@@ -11,7 +12,7 @@ COPY $FOLDER/package*.json ./
 RUN npm install
 
 # Copy source code into container
-RUN echo $FOLDER
+
 COPY $FOLDER .
 
 

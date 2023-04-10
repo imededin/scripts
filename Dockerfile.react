@@ -11,6 +11,7 @@ COPY $FOLDER/package*.json ./
 RUN npm install
 
 # Copy source code into container
+RUN echo $FOLDER
 COPY $FOLDER .
 
 

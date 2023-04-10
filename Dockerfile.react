@@ -1,5 +1,6 @@
 FROM node
 ARG FOLDER=./front-end
+ARG PORT=3000
 # Set working directory
 RUN mkdir app
 WORKDIR /app
@@ -17,7 +18,7 @@ COPY $FOLDER .
 
 
 # Expose the port used by the app
-EXPOSE 3000
+EXPOSE $PORT
 
 # Start the app
 CMD ["npm","start"]

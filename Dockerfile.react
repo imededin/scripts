@@ -6,7 +6,7 @@ ARG PORT=3000
 RUN mkdir app
 WORKDIR /app
 RUN echo $FOLDER
-RUN npm build
+
 
 # Copy package.json and package-lock.json (if applicable)
 COPY $FOLDER/package*.json ./
@@ -17,6 +17,7 @@ RUN npm install
 # Copy source code into container
 
 COPY $FOLDER .
+RUN npm run build
 
 
 # Expose the port used by the app

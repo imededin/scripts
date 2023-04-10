@@ -1,11 +1,12 @@
 FROM node
 ARG FOLDER=./front-end
-ARG PORT=5173
+ARG PORT=3000
 
 # Set working directory
 RUN mkdir app
 WORKDIR /app
 RUN echo $FOLDER
+RUN npm build
 
 # Copy package.json and package-lock.json (if applicable)
 COPY $FOLDER/package*.json ./
@@ -19,7 +20,7 @@ COPY $FOLDER .
 
 
 # Expose the port used by the app
-EXPOSE $PORT
+EXPOSE 3000
 
 # Start the app
-CMD ["npm","start"]
+CMD ["npx","serve","dist"]

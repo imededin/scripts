@@ -24,4 +24,4 @@ RUN npm run build
 EXPOSE $PORT
 
 # Start the app
-CMD ["npx","serve","dist"]
+CMD ["npx","serve","build"]

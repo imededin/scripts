@@ -10,6 +10,7 @@ ns_name: "test"
 db:
   password: "D9gVgSK7hG"
   name: "my-mongodb"
+  type: "mongodb"
 image:
   repository: 
     backend: imed1/node-app

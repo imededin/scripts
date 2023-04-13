@@ -34,8 +34,8 @@ spec:
           env:
             - name: PORT
               value: "5000"
-            - name: MONGO_DB_URL
-              value: "mongodb://root:{{ .Values.db.password}}@{{ .Values.db.name}}.{{ .Values.ns_name}}.svc.cluster.local"
+            - name: DB_URL
+              value: "{{ .Values.db.type}}://root:{{ .Values.db.password}}@{{ .Values.db.name}}.{{ .Values.ns_name}}.svc.cluster.local"
           # livenessProbe:
           #   httpGet:
           #     path: frontend-svc

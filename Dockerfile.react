@@ -1,6 +1,6 @@
 FROM node
 ARG FOLDER=./front-end
-ARG PORT=3001
+ARG PORT=3000
 
 # Set working directory
 RUN mkdir app
@@ -24,4 +24,4 @@ RUN npm run build
 EXPOSE $PORT
 
 # Start the app
-CMD ["npx","serve","build"]
+CMD ["npx","serve","dist"]

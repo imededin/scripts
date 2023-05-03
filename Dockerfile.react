@@ -19,18 +19,12 @@ RUN npm install
 
 COPY $FOLDER .
 RUN npm run build
-
-
 # Expose the port used by the app
 EXPOSE $PORT
-
-
-RUN echo "$BUILD_DIR"
-ENV BUILD $BUILD_DIR
-RUN echo $BUILD
 RUN npm install -g serve
 
 # Start the app 
-CMD if [ -n "$BUILD" ]; then serve "$BUILD"; else echo "BUILD not set"; fi
+CMD BUILD_DIR=$(find . -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -n | tail -1 | awk '{print $2}') &&     echo "BUILD_DIR is $BUILD_DIR" && serve $BUILD_DIR
+
 
 

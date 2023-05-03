@@ -28,6 +28,9 @@ RUN BUILD_DIR=$(find . -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort
     export BUILD_DIR 
     
 RUN npm install -g serve
+RUN echo "$BUILD_DIR"
 
 # Start the app 
-CMD ['serve','$BUILD_DIR']
+CMD if [ -n "$BUILD_DIR" ]; then serve "$BUILD_DIR"; else echo "BUILD_DIR not set"; fi
+
+

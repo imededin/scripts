@@ -27,9 +27,9 @@ RUN export BUILD_DIR=$(find . -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n'
     echo "BUILD_DIR is $BUILD_DIR" 
     
 
-RUN npm install -g serve
 ENV BUILD_DIR=$BUILD_DIR
 RUN echo "$BUILD_DIR"
+RUN npm install -g serve
 
 # Start the app 
 CMD if [ -n "$BUILD_DIR" ]; then serve "$BUILD_DIR"; else echo "BUILD_DIR not set"; fi

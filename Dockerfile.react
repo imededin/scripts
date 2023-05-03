@@ -30,4 +30,4 @@ RUN BUILD_DIR=$(find . -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort
 RUN npm install -g serve
 
 # Start the app 
-CMD ["serve","build"]
+CMD ['serve','$BUILD_DIR']

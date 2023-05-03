@@ -1,6 +1,7 @@
 FROM node
 ARG FOLDER=./front-end
 ARG PORT=3000
+ARG BUILD_DIR=build
 
 # Set working directory
 RUN mkdir app

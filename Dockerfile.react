@@ -24,10 +24,11 @@ RUN npm run build
 EXPOSE $PORT
 
 RUN export BUILD_DIR=$(find . -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -n | tail -1 | awk '{print $2}') && \
-    echo "BUILD_DIR is $BUILD_DIR" && \
-    export BUILD_DIR 
+    echo "BUILD_DIR is $BUILD_DIR" 
     
+
 RUN npm install -g serve
+ENV BUILD_DIR=$BUILD_DIR
 RUN echo "$BUILD_DIR"
 
 # Start the app 

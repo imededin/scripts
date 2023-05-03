@@ -22,9 +22,13 @@ RUN npm run build
 
 # Expose the port used by the app
 EXPOSE $PORT
-ENV BUILD_DIR \
-    $(find /app/build -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -n | tail -1 | awk '{print $2}')
+ENV BUILD_DIR build
+RUN BUILD_DIR=$(find /app/build -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort -n | tail -1 | awk '{print $2}') && \
+    echo "BUILD_DIR is $BUILD_DIR" && \
+    export BUILD_DIR && \
+    echo "exported BUILD_DIR as $BUILD_DIR"
+    
 
-RUN echo "${BUILD_DIR}"
+
 # Start the app
 CMD ["npx","serve","${BUILD_DIR}"]

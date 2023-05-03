@@ -26,6 +26,8 @@ EXPOSE $PORT
 
 
 RUN echo "$BUILD_DIR"
+ENV BUILD $BUILD_DIR
+RUN echo $BUILD
 RUN npm install -g serve
 
 # Start the app 

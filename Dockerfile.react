@@ -27,7 +27,7 @@ RUN BUILD_DIR=$(find . -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' | sort
     echo "BUILD_DIR is $BUILD_DIR" && \
     export BUILD_DIR 
     
-RUN npm install serve
+RUN npm install -g serve
 
 # Start the app
-CMD ["npx","serve","$BUILD_DIR"]
+CMD ["serve","$BUILD_DIR"]

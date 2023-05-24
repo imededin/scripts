@@ -1,0 +1,13 @@
+FROM node 
+ARG FOLDER=frontend
+RUN echo $FOLDER
+WORKDIR /app
+COPY  $FOLDER/package*.json ./
+RUN npm install
+COPY $FOLDER .
+RUN npm run build 
+RUN npm install -g lite-server
+
+EXPOSE 3000
+#CMD ["lite-server", "--baseDir", "."]
+CMD BUILD_DIR=$(find . -mindepth 1 -maxdepth 2 -type d -printf '%T@ %p\n' | sort -n | tail -1 | awk '{print $2}') &&     echo "BUILD_DIR is $BUILD_DIR" && lite-server --baseDir $BUILD_DIR

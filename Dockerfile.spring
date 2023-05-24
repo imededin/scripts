@@ -1,0 +1,17 @@
+FROM openjdk:17
+
+# Set the working directory in the container
+ARG FOLDER=backend
+Run echo $FOLDER
+WORKDIR /app
+
+
+# Copy the JAR file and configuration files to the container
+COPY $FOLDER/target/backend-0.0.1-SNAPSHOT.jar /app/my-app.jar
+#COPY application.properties /app/application.properties
+
+# Expose the port on which the Spring app will run
+EXPOSE 5000
+
+# Set the command to run the Spring app
+CMD ["java", "-jar", "/app/my-app.jar"]
